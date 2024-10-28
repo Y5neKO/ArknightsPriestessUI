@@ -61,21 +61,21 @@
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-pie-chart-alt icon'></i>
-                            <span class="text nav-text">Analytics</span>
+                            <i class='bx bx-vial icon'></i>
+                            <span class="text nav-text">实验功能</span>
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-heart icon'></i>
-                            <span class="text nav-text">Likes</span>
-                        </a>
-                    </li>
+<!--                    <li class="nav-link">-->
+<!--                        <a href="#">-->
+<!--                            <i class='bx bx-heart icon'></i>-->
+<!--                            <span class="text nav-text">Likes</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon'></i>
+                        <a href="#prts_setting" onclick="navigate('prts_setting')">
+                            <i class='bx bx-server icon'></i>
                             <span class="text nav-text">设置</span>
                         </a>
                     </li>
@@ -83,12 +83,12 @@
             </div>
             <div class="bottom-content">
                 <ul>
-                    <li>
-                        <a href="#">
-                            <i class="bx bx-log-out icon"></i>
-                            <span class="text nav-text">退出</span>
-                        </a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a href="#">-->
+<!--                            <i class="bx bx-log-out icon"></i>-->
+<!--                            <span class="text nav-text">退出</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
                     <li class="mode">
                         <div class="sun-moon">
                             <i class="bx bx-moon icon moon"></i>
@@ -106,7 +106,7 @@
     </nav>
 
     <section class="home">
-        <div id="page_top" class="text">Arknights Priestess</div>
+        <div id="page_top" class="text">PRTS终端系统</div>
 
         <!--主页-->
         <div id="prts_home" class="page active">
@@ -135,6 +135,28 @@
         <div id="prts_two" class="page">
             <p>这是第二页</p>
         </div>
+        <form method="post" id="settingForm">
+            <div id="prts_setting" class="page">
+                <div id="setting_box" class="setting_box">
+                    <div id="setting_in_box" class="setting_in_box">
+                        <h1 class="setting_title">设置</h1>
+                        <center>
+                            <h4 class="setting_title">模拟器设置</h4>
+                            <hr>
+                            <label for="emu_setting" class="setting_item">模拟器设置: </label>
+                            <select id="emu_setting" class="setting_item bx-selection">
+                                <option value="auto">自动选择</option>
+                                <option value="mumu">MuMu模拟器</option>
+                                <option value="2">模拟器2</option>
+                            </select>
+
+                            <hr>
+                            <input type="submit" value="保存设置" class="setting_save_button">
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </form>
     </section>
 
     <script src="./js/script.js"></script>
@@ -203,8 +225,10 @@
         // 初始请求数据
         fetchData();
         fetchImage();
-        const height = window.innerHeight - 60 - 250 - 62 - 60;
-        document.getElementById("current_task_box").style.height = height.toString() + "px"
+        const task_and_screen_height = window.innerHeight - 60 - 250 - 62 - 60;
+        document.getElementById("current_task_box").style.height = task_and_screen_height.toString() + "px"
+        const setting_in_box_height = window.innerHeight - 60 - 60;
+        document.getElementById("setting_in_box").style.height = setting_in_box_height.toString() + "px"
     });
 </script>
 <!--单页应用相关-->
@@ -243,8 +267,24 @@
         document.getElementById("current_task_box").style.height = height.toString() + "px"
     }
 </script>
+<!--设置页相关-->
 <script>
-
+    $(document).ready(function() {
+        $('#settingForm').on('submit', function(event) {
+            event.preventDefault(); // 防止默认提交
+            $.ajax({
+                url: 'http://127.0.0.1:14513/api/config_set', // 替换为你的API地址
+                type: 'POST',
+                data: $(this).serialize(), // 序列化表单数据
+                success: function(response) {
+                    console.log('成功:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('发生错误:', error);
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

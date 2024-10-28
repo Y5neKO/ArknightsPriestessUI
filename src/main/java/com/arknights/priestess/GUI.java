@@ -70,6 +70,9 @@ public class GUI extends Application {
         buttonMin.setOnAction(e -> stage.setIconified(true));
         // 最大化按钮
         Button buttonMax = Tools.getImgButton("img/MaxButton.png");
+//        buttonMax.setOnAction(event -> {
+//            stage.setMaximized(!stage.isMaximized());
+//        });
         buttonMax.setOnAction(e -> {
             e.consume();
             minimizeToTray(stage);
